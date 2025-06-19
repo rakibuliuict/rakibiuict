@@ -510,7 +510,7 @@ def getLargestCC(segmentation):
 
 
 def var_all_case_LA(model, num_classes, patch_size=(112, 112, 80), stride_xy=18, stride_z=4):
-    with open('/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split/test.txt', 'r') as f:
+    with open('/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split/test.txt', 'r') as f:
         image_list = f.readlines()
     image_list = ["/content/drive/MyDrive/0SSL/Dataset/2018_UTAH_MICCAI/Training Set/" + item.strip() + "/mri_norm2.h5" for item in image_list]
     loader = tqdm(image_list)
