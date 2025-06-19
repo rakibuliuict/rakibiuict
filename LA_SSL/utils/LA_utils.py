@@ -254,25 +254,38 @@ class CutmixFTMeasures(Measures):
         self.writer.flush()
 
 
+# def to_cuda(tensors, device=None):
+#     res = []
+#     if isinstance(tensors, (list, tuple)):
+#         for t in tensors:
+#             res.append(to_cuda(t, device))
+#         return res
+#     elif isinstance(tensors, (dict,)):
+#         res = {}
+#         for k, v in tensors.items():
+#             res[k] = to_cuda(v, device)
+#         return res
+#     else:
+#         if isinstance(tensors, torch.Tensor):
+#             if device is None:
+#                 return tensors.cuda()
+#             else:
+#                 return tensors.to(device)
+#         else:
+#             return tensors
+
 def to_cuda(tensors, device=None):
-    res = []
     if isinstance(tensors, (list, tuple)):
-        for t in tensors:
-            res.append(to_cuda(t, device))
-        return res
-    elif isinstance(tensors, (dict,)):
-        res = {}
-        for k, v in tensors.items():
-            res[k] = to_cuda(v, device)
-        return res
-    else:
-        if isinstance(tensors, torch.Tensor):
-            if device is None:
-                return tensors.cuda()
-            else:
-                return tensors.to(device)
-        else:
-            return tensors
+        return [to_cuda(t, device) for t in tensors]
+    elif isinstance(tensors, dict):
+        return {k: to_cuda(v, device) for k, v in tensors.items()}
+    elif isinstance(tensors, np.ndarray):
+        tensors = torch.from_numpy(tensors).float()
+    elif not isinstance(tensors, torch.Tensor):
+        raise TypeError(f"Invalid input to to_cuda(): {type(tensors)}")
+
+    return tensors.cuda() if device is None else tensors.to(device)
+
 
 
 def get_cut_mask(out, thres=0.5, nms=True, connect_mode=1):
