@@ -337,10 +337,22 @@ def self_train(args, pre_snapshot_path, self_snapshot_path):
     iterator = tqdm(range(1, max_epoch), ncols=70)
     for epoch in iterator:
         logging.info("\n")
-        for step, ((img_a, lab_a), (img_b, lab_b), (unimg_a, unlab_a), (unimg_b, unlab_b)) in enumerate(
-                zip(lab_loader_a, lab_loader_b, unlab_loader_a, unlab_loader_b)):
+        # for step, ((img_a, lab_a), (img_b, lab_b), (unimg_a, unlab_a), (unimg_b, unlab_b)) in enumerate(
+        #         zip(lab_loader_a, lab_loader_b, unlab_loader_a, unlab_loader_b)):
+        #     img_a, lab_a, img_b, lab_b, unimg_a, unlab_a, unimg_b, unlab_b = to_cuda(
+        #         [img_a, lab_a, img_b, lab_b, unimg_a, unlab_a, unimg_b, unlab_b])
+        for step, (data_a, data_b, data_ua, data_ub) in enumerate(
+        zip(lab_loader_a, lab_loader_b, unlab_loader_a, unlab_loader_b)):
+
+            img_a, lab_a = data_a["image"], data_a["label"]
+            img_b, lab_b = data_b["image"], data_b["label"]
+            unimg_a, unlab_a = data_ua["image"], data_ua["label"]
+            unimg_b, unlab_b = data_ub["image"], data_ub["label"]
+
             img_a, lab_a, img_b, lab_b, unimg_a, unlab_a, unimg_b, unlab_b = to_cuda(
-                [img_a, lab_a, img_b, lab_b, unimg_a, unlab_a, unimg_b, unlab_b])
+                [img_a, lab_a, img_b, lab_b, unimg_a, unlab_a, unimg_b, unlab_b]
+            )
+
 
             with torch.no_grad():
 
