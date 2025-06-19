@@ -203,10 +203,10 @@ def pre_train(args, snapshot_path):
     model2 = create_ResVnet()
 
     c_batch_size = 2
-    trainset_lab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_lab', logging=logging)
+    trainset_lab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_lab', logging=logging)
     lab_loader_a = DataLoader(trainset_lab_a, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
-    trainset_lab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_lab', reverse=True, logging=logging)
+    trainset_lab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_lab', reverse=True, logging=logging)
     lab_loader_b = DataLoader(trainset_lab_b, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
 
@@ -297,16 +297,16 @@ def self_train(args, pre_snapshot_path, self_snapshot_path):
 
 
     c_batch_size = 2
-    trainset_lab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_lab', logging=logging)
+    trainset_lab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_lab', logging=logging)
     lab_loader_a = DataLoader(trainset_lab_a, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
-    trainset_lab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_lab', reverse=True, logging=logging)
+    trainset_lab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_lab', reverse=True, logging=logging)
     lab_loader_b = DataLoader(trainset_lab_b, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
-    trainset_unlab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_unlab', logging=logging)
+    trainset_unlab_a = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_unlab', logging=logging)
     unlab_loader_a = DataLoader(trainset_unlab_a, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
-    trainset_unlab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split", split='train_unlab', reverse=True, logging=logging)
+    trainset_unlab_b = LAHeart(train_data_path, "/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split", split='train_unlab', reverse=True, logging=logging)
     unlab_loader_b = DataLoader(trainset_unlab_b, batch_size=c_batch_size, shuffle=False, num_workers=0, drop_last=True)
 
 
@@ -464,15 +464,15 @@ def self_train(args, pre_snapshot_path, self_snapshot_path):
 
 if __name__ == "__main__":
     ## make logger file
-    pre_snapshot_path = "/content/drive/MyDrive/0SSL/WUB_mail/model/SDCL/LA_{}_{}_labeled/pre_train".format(args.exp, args.labelnum)
-    self_snapshot_path = "/content/drive/MyDrive/0SSL/WUB_mail/model/SDCL/LA_{}_{}_labeled/self_train".format(args.exp, args.labelnum)
+    pre_snapshot_path = "/content/drive/MyDrive/0SSL/rakibiuict/model/SDCL/LA_{}_{}_labeled/pre_train".format(args.exp, args.labelnum)
+    self_snapshot_path = "/content/drive/MyDrive/0SSL/rakibiuict/model/SDCL/LA_{}_{}_labeled/self_train".format(args.exp, args.labelnum)
     print("Starting SDCL training.")
     for snapshot_path in [pre_snapshot_path, self_snapshot_path]:
         if not os.path.exists(snapshot_path):
             os.makedirs(snapshot_path)
         if os.path.exists(snapshot_path + '/code'):
             shutil.rmtree(snapshot_path + '/code')
-    shutil.copy('/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/LA_train.py', self_snapshot_path)
+    shutil.copy('/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/LA_train.py', self_snapshot_path)
     # -- Pre-Training
     logging.basicConfig(filename=pre_snapshot_path + "/log.txt", level=logging.INFO,
                         format='[%(asctime)s.%(msecs)03d] %(message)s', datefmt='%H:%M:%S')
