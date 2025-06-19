@@ -273,14 +273,14 @@ from utils import test_3d_patch
 # ------------------ Argument parser ------------------ #
 parser = argparse.ArgumentParser()
 parser.add_argument('--root_path', type=str, default='/content/drive/MyDrive/0SSL/Dataset/2018_UTAH_MICCAI')
-parser.add_argument('--list_path', type=str, default='/content/drive/MyDrive/0SSL/WUB_mail/LA_SSL/Datasets/la/data_split')
+parser.add_argument('--list_path', type=str, default='/content/drive/MyDrive/0SSL/rakibiuict/LA_SSL/Datasets/la/data_split')
 parser.add_argument('--exp', type=str, default='Supervised')
 parser.add_argument('--model', type=str, default='VNet', choices=['VNet', 'ResVNet'])
-parser.add_argument('--epochs', type=int, default=32)
+parser.add_argument('--epochs', type=int, default=6)
 parser.add_argument('--batch_size', type=int, default=2)
 parser.add_argument('--lr', type=float, default=1e-3)
 parser.add_argument('--gpu', type=str, default='0')
-parser.add_argument('--save_path', type=str, default='/content/drive/MyDrive/0SSL/WUB_mail/model/PreTrained')
+parser.add_argument('--save_path', type=str, default='/content/drive/MyDrive/0SSL/rakibiuict/model/PreTrained')
 args = parser.parse_args()
 
 # ------------------ Setup ------------------ #
@@ -319,7 +319,7 @@ dice_loss = DiceLoss(nclass=2)
 optimizer = optim.Adam(net.parameters(), lr=args.lr)
 
 # ------------------ Resume Setup ------------------ #
-start_epoch = 12  # <<< CHANGE HERE to resume training
+start_epoch = 0  # <<< CHANGE HERE to resume training
 best_dice = 0
 checkpoint_path = os.path.join(args.save_path, "last_checkpoint.pth")
 
