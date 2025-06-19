@@ -222,7 +222,7 @@ def pre_train(args, snapshot_path):
     iter_num = 0
     best_dice = 0
     best_dice2 = 0
-    max_epoch = 5 #81 silo
+    max_epoch = 2 #81 silo
     iterator = tqdm(range(1, max_epoch), ncols=70)
     for epoch_num in iterator:
         logging.info("\n")
@@ -261,7 +261,7 @@ def pre_train(args, snapshot_path):
             logging.info(
                 'iteration %d : loss: %03f, loss_dice: %03f, loss_ce: %03f' % (iter_num, loss, loss_dice, loss_ce))
 
-        if epoch_num % 5 == 0:
+        if epoch_num % 2 == 0:
             model.eval()
             dice_sample = test_3d_patch.var_all_case_LA(model, num_classes=num_classes, patch_size=patch_size,
                                                         stride_xy=18, stride_z=4)
@@ -333,7 +333,7 @@ def self_train(args, pre_snapshot_path, self_snapshot_path):
     best_dice = 0
     best_dice2 = 0
     mean_best_dice = 0
-    max_epoch = 276
+    max_epoch = 4 #276 silo
     iterator = tqdm(range(1, max_epoch), ncols=70)
     for epoch in iterator:
         logging.info("\n")
@@ -411,7 +411,7 @@ def self_train(args, pre_snapshot_path, self_snapshot_path):
 
             update_ema_variables(model1, ema_model1, 0.99)
 
-        if epoch % 5 == 0:
+        if epoch % 2 == 0:
             model1.eval()
             model2.eval()
             dice_sample = test_3d_patch.var_all_case_LA(model1, num_classes=num_classes, patch_size=patch_size,
